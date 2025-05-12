@@ -25,8 +25,8 @@ public class Routes {
 //        return "carShop";
 //    }
 
-    @GetMapping("/panelAdmin")
-    public String panelAdmin(){
-        return "panelAdmin";
-    }
+    // @GetMapping("/panelAdmin")
+    // public String panelAdmin(){
+    //     return "panelAdmin";
+    // }
 }
