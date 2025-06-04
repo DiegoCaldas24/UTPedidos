@@ -1,0 +1,33 @@
+/* Modal - Ocultar por defecto */
+.modal {
+    display: none; /* El modal estará oculto inicialmente */
+    position: fixed;
+    z-index: 1; /* Asegura que el modal esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+}
+
+/* Contenido del modal */
+.modal-contenido {
+    background-color: white;
+    margin: 15% auto; /* Centra el modal */
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Estilo para el botón de cerrar */
+.cerrar {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: red;
+}
