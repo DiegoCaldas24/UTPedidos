@@ -1,7 +1,9 @@
 package com.example.Ejemplo.controllers;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,62 +14,92 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.Ejemplo.interfaces.PlatoService;
-import com.example.Ejemplo.models.Plato;
+import com.example.Ejemplo.Services.ProductoService;
+import com.example.Ejemplo.models.Categoria;
+import com.example.Ejemplo.models.Producto;
+import com.example.Ejemplo.repositories.CategoriaRepository;
 
 @Controller
-@RequestMapping("/platos")
+@RequestMapping("/productos")
 public class AdminController {
 
-    private final PlatoService platoService;
+    private final ProductoService productoService;
+    private final CategoriaRepository categoriaRepository;
 
-    public AdminController(PlatoService platoService) {
-        this.platoService = platoService;
+    @Autowired
+    public AdminController(ProductoService productoService, CategoriaRepository categoriaRepository) {
+        this.productoService = productoService;
+        this.categoriaRepository = categoriaRepository;
     }
 
     @GetMapping 
     public String panelAdmin(Model model) {
-        model.addAttribute("platos", platoService.findRecent());
-        model.addAttribute("plato", new Plato());
+        model.addAttribute("productos", productoService.findRecent());
+        model.addAttribute("producto", new Producto());
+        
+        // Obtener todas las categorías de la base de datos
+        List<Categoria> categorias = categoriaRepository.findAll();
+        model.addAttribute("categorias", categorias);
+        
         return "panelAdmin";
     }
 
-    @PostMapping("/subirplatos")
-    public String guardarPlato(@RequestParam("nombre") String nombre,
+    @PostMapping("/subirproductos")
+    public String guardarProducto(@RequestParam("nombre") String nombre,
             @RequestParam("precio") BigDecimal precio,
             @RequestParam("descripcion") String descripcion,
-            @RequestParam("categoria") String categoria,
+            @RequestParam("categoria") String categoriaNombre,
             @RequestParam("imagen") MultipartFile imagen,
             @RequestParam(value = "disponible", defaultValue = "false") boolean disponible,
-            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "id", required = false) Integer id,
             RedirectAttributes redirectAttributes) {
 
-        Plato plato = new Plato();
-        plato.setId(id);
-        plato.setNombre(nombre);
-        plato.setPrecio(precio);
-        plato.setDescripcion(descripcion);
-        plato.setCategoria(categoria);
-        plato.setDisponible(disponible);
+        Producto producto = new Producto();
+        if (id != null) {
+            producto.setId(id);
+        }
+        producto.setNombre(nombre);
+        producto.setPrecio(precio);
+        producto.setDescripcion(descripcion);
+        
+        // Buscar la categoría por nombre
+        Categoria categoria = categoriaRepository.findByNombre(categoriaNombre);
+        if (categoria == null) {
+            categoria = new Categoria();
+            categoria.setNombre(categoriaNombre);
+            categoria = categoriaRepository.save(categoria);
+        }
+        producto.setCategoria(categoria);
+        
+        producto.setEstado(disponible);
+        producto.setStock(100); // Valor por defecto
 
-        platoService.save(plato, imagen);
+        productoService.save(producto, imagen);
 
-        redirectAttributes.addFlashAttribute("mensaje", "Plato guardado correctamente");
-        return "redirect:/platos";
+        redirectAttributes.addFlashAttribute("mensaje", "Producto guardado correctamente");
+        return "redirect:/productos";
     }
 
     @GetMapping("/{id}")
-    public String editarPlato(@PathVariable Long id, Model model) {
-        Plato plato = platoService.findById(id);
-        model.addAttribute("plato", plato);
-        model.addAttribute("platos", platoService.findRecent());
-        return "panelAdmin";
+    public String editarProducto(@PathVariable Integer id, Model model) {
+        Producto producto = productoService.findById(id);
+        if (producto != null) {
+            model.addAttribute("producto", producto);
+            model.addAttribute("productos", productoService.findRecent());
+            
+            // Obtener todas las categorías de la base de datos
+            List<Categoria> categorias = categoriaRepository.findAll();
+            model.addAttribute("categorias", categorias);
+            
+            return "panelAdmin";
+        }
+        return "redirect:/productos";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminarPlato(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        platoService.delete(id);
-        redirectAttributes.addFlashAttribute("mensaje", "Plato eliminado correctamente");
-        return "redirect:/platos";
+    public String eliminarProducto(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        productoService.delete(id);
+        redirectAttributes.addFlashAttribute("mensaje", "Producto eliminado correctamente");
+        return "redirect:/productos";
     }
 }
