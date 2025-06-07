@@ -27,12 +27,16 @@ public class Notificacion {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
+    @jakarta.validation.constraints.NotNull
     private Usuario usuario;
     
     @Column(nullable = false, length = 50)
+    @jakarta.validation.constraints.NotBlank
+    @jakarta.validation.constraints.Size(max = 50)
     private String mensaje;
     
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull
     private Boolean estado;
 
     public Integer getId() {

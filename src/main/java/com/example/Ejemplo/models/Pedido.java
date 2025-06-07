@@ -33,15 +33,19 @@ public class Pedido {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
+    @jakarta.validation.constraints.NotNull
     private Usuario usuario;
     
     @Column(name = "fecha_pedido", nullable = false)
+    @jakarta.validation.constraints.NotNull
     private LocalDateTime fechaPedido;
     
     @Column(name = "fecha_entrega", nullable = false)
+    @jakarta.validation.constraints.NotNull
     private LocalDateTime fechaEntrega;
     
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull
     private Boolean estado;
     
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)

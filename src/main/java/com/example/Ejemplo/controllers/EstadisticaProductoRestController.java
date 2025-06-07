@@ -16,7 +16,7 @@ public class EstadisticaProductoRestController {
     private DetalleVentaRepository detalleVentaRepository;
 
     @GetMapping("/masVendidos")
-    public List<Object[]> getProductosMasVendidos() {
+    public List<?> getProductosMasVendidos() {
         return detalleVentaRepository.findProductosMasVendidos();
     }
 }

@@ -19,8 +19,8 @@
                     </thead>
                     <tbody>
                         <tr th:each="row : ${productosMasVendidos}">
-                            <td th:text="${row[0].nombre}">Nombre producto</td>
-                            <td th:text="${row[1]}">0</td>
+                            <td th:text="${row.nombre}">Nombre producto</td>
+                            <td th:text="${row.totalVendidos}">0</td>
                         </tr>
                     </tbody>
                 </table>

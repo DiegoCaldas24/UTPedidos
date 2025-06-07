@@ -21,12 +21,19 @@ public class Usuario {
     private Integer id;
     
     @Column(nullable = false, length = 100)
+    @jakarta.validation.constraints.NotBlank
+    @jakarta.validation.constraints.Size(max = 100)
     private String nombre;
     
     @Column(nullable = false, unique = true, length = 100)
+    @jakarta.validation.constraints.Email
+    @jakarta.validation.constraints.NotBlank
+    @jakarta.validation.constraints.Size(max = 100)
     private String correo;
     
     @Column(nullable = false, length = 100)
+    @jakarta.validation.constraints.NotBlank
+    @jakarta.validation.constraints.Size(min = 6, max = 100)
     private String password;
     
     @Enumerated(EnumType.STRING)

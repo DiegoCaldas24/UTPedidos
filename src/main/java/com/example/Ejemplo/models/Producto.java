@@ -11,6 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "productos")
@@ -22,24 +28,36 @@ public class Producto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", nullable = false)
+    @NotNull
+    @com.fasterxml.jackson.annotation.JsonBackReference
     private Categoria categoria;
 
     @Column(nullable = false, length = 30)
+    @NotBlank
+    @Size(max = 30)
     private String nombre;
 
     @Column(nullable = false, precision = 6, scale = 2)
+    @NotNull
+    @DecimalMin("0.00")
     private BigDecimal precio;
 
     @Column(nullable = false, length = 255)
+    @NotBlank
+    @Size(max = 255)
     private String descripcion;
 
     @Column(nullable = false)
+    @NotNull
+    @Min(0)
     private Integer stock;
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    @NotNull
     private Boolean estado;
 
     @Column(name = "imagen_url")
+    @Size(max = 255)
     private String imagenUrl;
 
     public Producto() {}

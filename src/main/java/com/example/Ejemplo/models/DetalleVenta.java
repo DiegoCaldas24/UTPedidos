@@ -25,19 +25,25 @@ public class DetalleVenta {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_venta", nullable = false)
+    @jakarta.validation.constraints.NotNull
     private Venta venta;
     
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", nullable = false)
+    @jakarta.validation.constraints.NotNull
     private Producto producto;
     
     @Column(nullable = false)
+    @jakarta.validation.constraints.NotNull
+    @jakarta.validation.constraints.Min(1)
     private Integer cantidad;
     
     @Column(nullable = false, precision = 6, scale = 2)
+    @jakarta.validation.constraints.NotNull
     private BigDecimal precio;
     
     @Column(nullable = false, precision = 6, scale = 2)
+    @jakarta.validation.constraints.NotNull
     private BigDecimal subtotal;
 }

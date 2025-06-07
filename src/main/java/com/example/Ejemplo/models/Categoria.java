@@ -25,6 +25,7 @@ public class Categoria {
     private String nombre;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Producto> productos;
 
     public Integer getIdCategoria() {
