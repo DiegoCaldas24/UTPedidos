@@ -3,6 +3,7 @@ package com.example.Ejemplo.controllers;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +18,15 @@ import com.example.Ejemplo.Services.ProductoService;
 import com.example.Ejemplo.models.Categoria;
 import com.example.Ejemplo.models.Producto;
 import com.example.Ejemplo.repositories.CategoriaRepository;
+import com.example.Ejemplo.repositories.DetalleVentaRepository;
 
 @Controller
 @RequestMapping("/productos")
 public class AdminController {
     private final ProductoService productoService;
     private final CategoriaRepository categoriaRepository;
+    @Autowired
+    private DetalleVentaRepository detalleVentaRepository;
 
     public AdminController(ProductoService productoService, CategoriaRepository categoriaRepository) {
         this.productoService = productoService;
