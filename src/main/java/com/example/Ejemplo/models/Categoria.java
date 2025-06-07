@@ -1,48 +1,53 @@
 package com.example.Ejemplo.models;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "categorias")
 public class Categoria {
-    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private Integer id;
-    
-    @Column(nullable = false, length = 30)
+    private Integer idCategoria;
+
+    @Column(name = "nombre", length= 30, nullable = false)
     private String nombre;
-    
-    // Constructor vacío
-    public Categoria() {
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Producto> productos;
+
+    public Integer getIdCategoria() {
+        return this.idCategoria;
     }
-    
-    // Constructor completo
-    public Categoria(Integer id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
+
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
     }
-    
-    // Getters y setters
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
+
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
-    
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<Producto> getProductos() {
+        return this.productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }

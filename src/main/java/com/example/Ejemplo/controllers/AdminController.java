@@ -3,7 +3,6 @@ package com.example.Ejemplo.controllers;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,30 +21,35 @@ import com.example.Ejemplo.repositories.CategoriaRepository;
 @Controller
 @RequestMapping("/productos")
 public class AdminController {
-
     private final ProductoService productoService;
     private final CategoriaRepository categoriaRepository;
 
-    @Autowired
     public AdminController(ProductoService productoService, CategoriaRepository categoriaRepository) {
         this.productoService = productoService;
         this.categoriaRepository = categoriaRepository;
     }
 
-    @GetMapping 
+    @GetMapping
     public String panelAdmin(Model model) {
-        model.addAttribute("productos", productoService.findRecent());
+        List<Producto> productos = productoService.findAll();
+        if (productos.isEmpty()) {
+            System.out.println("No se encontraron productos en la base de datos.");
+        } else {
+            System.out.println("Productos encontrados: " + productos.size());
+            for (Producto p : productos) {
+                System.out.println("Producto: " + p.getNombre() + ", Categoria: " + (p.getCategoria() != null ? p.getCategoria().getNombre() : "null"));
+            }
+        }
+        model.addAttribute("productos", productos);
         model.addAttribute("producto", new Producto());
-        
-        // Obtener todas las categorías de la base de datos
         List<Categoria> categorias = categoriaRepository.findAll();
         model.addAttribute("categorias", categorias);
-        
         return "panelAdmin";
     }
 
     @PostMapping("/subirproductos")
-    public String guardarProducto(@RequestParam("nombre") String nombre,
+    public String guardarProducto(
+            @RequestParam("nombre") String nombre,
             @RequestParam("precio") BigDecimal precio,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("categoria") String categoriaNombre,
@@ -53,7 +57,6 @@ public class AdminController {
             @RequestParam(value = "disponible", defaultValue = "false") boolean disponible,
             @RequestParam(value = "id", required = false) Integer id,
             RedirectAttributes redirectAttributes) {
-
         Producto producto = new Producto();
         if (id != null) {
             producto.setId(id);
@@ -61,8 +64,6 @@ public class AdminController {
         producto.setNombre(nombre);
         producto.setPrecio(precio);
         producto.setDescripcion(descripcion);
-        
-        // Buscar la categoría por nombre
         Categoria categoria = categoriaRepository.findByNombre(categoriaNombre);
         if (categoria == null) {
             categoria = new Categoria();
@@ -70,12 +71,9 @@ public class AdminController {
             categoria = categoriaRepository.save(categoria);
         }
         producto.setCategoria(categoria);
-        
         producto.setEstado(disponible);
-        producto.setStock(100); // Valor por defecto
-
+        producto.setStock(100);
         productoService.save(producto, imagen);
-
         redirectAttributes.addFlashAttribute("mensaje", "Producto guardado correctamente");
         return "redirect:/productos";
     }
@@ -86,11 +84,8 @@ public class AdminController {
         if (producto != null) {
             model.addAttribute("producto", producto);
             model.addAttribute("productos", productoService.findRecent());
-            
-            // Obtener todas las categorías de la base de datos
             List<Categoria> categorias = categoriaRepository.findAll();
             model.addAttribute("categorias", categorias);
-            
             return "panelAdmin";
         }
         return "redirect:/productos";

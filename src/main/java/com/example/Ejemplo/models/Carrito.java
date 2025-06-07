@@ -80,6 +80,5 @@ public class Carrito {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-
-
+    
 }

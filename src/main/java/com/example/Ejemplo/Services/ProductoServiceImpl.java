@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -21,7 +20,6 @@ import com.example.Ejemplo.repositories.ProductoRepository;
 @Service
 @Primary
 public class ProductoServiceImpl implements ProductoService {
-
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
     private final Path rootLocation = Paths.get("src/main/resources/static/images/");
@@ -39,9 +37,9 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public List<Producto> findRecent() {
-        return productoRepository.findAll().stream()
-                .limit(5)
-                .collect(Collectors.toList());
+        List<Producto> productos = productoRepository.findAll();
+        System.out.println("Productos encontrados en el servicio: " + productos.size());
+        return productos;
     }
 
     @Override
@@ -51,7 +49,6 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto save(Producto producto, MultipartFile imagen) {
-        // Manejar la imagen si se proporciona
         if (imagen != null && !imagen.isEmpty()) {
             String filename = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
             try {
@@ -61,8 +58,6 @@ public class ProductoServiceImpl implements ProductoService {
                 throw new RuntimeException("Error al guardar la imagen: " + e.getMessage());
             }
         }
-        
-        // Guardar el producto
         return productoRepository.save(producto);
     }
 

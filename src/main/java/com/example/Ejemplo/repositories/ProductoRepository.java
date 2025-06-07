@@ -10,10 +10,7 @@ import com.example.Ejemplo.models.Producto;
 
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
-    
     List<Producto> findByCategoria(Categoria categoria);
-    
     List<Producto> findByNombreContaining(String nombre);
-    
     List<Producto> findByEstadoTrue();
 }

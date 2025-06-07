@@ -11,6 +11,6 @@ public interface ProductoService {
     List<Producto> findRecent();
     Producto findById(Integer id);
     Producto save(Producto producto, MultipartFile imagen);
-    void /*👀👀👀👀👀*/ delete(Integer id);
+    void delete(Integer id);
     List<Producto> findByCategoriaNombre(String categoriaNombre);
 }
