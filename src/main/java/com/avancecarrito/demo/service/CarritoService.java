@@ -1,11 +1,11 @@
 package com.avancecarrito.demo.service;
 
-import com.avancecarrito.demo.modelo.Productos;
+import com.avancecarrito.demo.modelo.Producto;
 import java.util.List;
-import java.util.Optional;
+
 
 public interface CarritoService {
-    List<Productos> findAllProductos();
-    List<Productos> findAllProductosById(int id);
+    List<Producto> findAllProductos();
+    List<Producto> findAllProductosById(int id);
     
 }

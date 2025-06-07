@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.avancecarrito.demo.modelo.Productos;
+import com.avancecarrito.demo.modelo.Producto;
 import com.avancecarrito.demo.repository.CarritoRepository;
 import com.avancecarrito.demo.repository.ProductoRepository;
 
@@ -20,13 +20,13 @@ public class CarritoServiceImpl implements CarritoService{
     }
 
     @Override
-    public List<Productos> findAllProductos() {
+    public List<Producto> findAllProductos() {
         return productoRepository.findAll();
     }
 
     @Override
-    public List<Productos> findAllProductosById(int id) {
-        // TODO Auto-generated method stub
+    public List<Producto> findAllProductosById(int id) {
+       
         throw new UnsupportedOperationException();
     }
 

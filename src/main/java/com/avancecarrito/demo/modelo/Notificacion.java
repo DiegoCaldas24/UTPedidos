@@ -1,7 +1,5 @@
 package com.avancecarrito.demo.modelo;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,35 +8,40 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "carrito")
+@Table(name = "notificaciones")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Carrito {
+public class Notificacion {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrito")
+    @Column(name = "id_notificacion")
     private Integer id;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_producto", nullable = false)
-    private Producto producto;
-
+    
+    @Column(nullable = false, length = 50)
+    private String mensaje;
+    
     @Column(nullable = false)
-    private Integer cantidad;
+    private Boolean estado;
 
-    @Column(nullable = false, precision = 6, scale = 3)
-    private BigDecimal total;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -48,28 +51,21 @@ public class Carrito {
         this.usuario = usuario;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public String getMensaje() {
+        return mensaje;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
 
 }

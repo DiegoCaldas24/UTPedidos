@@ -5,47 +5,48 @@ import java.math.BigDecimal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "carrito")
+@Table(name = "detalle_pedido")
+@IdClass(DetallePedidoId.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Carrito {
+public class DetallePedido {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrito")
-    private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
-
+    @JoinColumn(name = "id_pedido", nullable = false)
+    private Pedido pedido;
+    
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", nullable = false)
     private Producto producto;
-
+    
     @Column(nullable = false)
     private Integer cantidad;
+    
+    @Column(nullable = false, precision = 6, scale = 2)
+    private BigDecimal precio;
+    
+    @Column(nullable = false, precision = 6, scale = 2)
+    private BigDecimal subtotal;
 
-    @Column(nullable = false, precision = 6, scale = 3)
-    private BigDecimal total;
-
-    public Usuario getUsuario() {
-        return usuario;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
     public Producto getProducto() {
@@ -64,12 +65,21 @@ public class Carrito {
         this.cantidad = cantidad;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
+
 
 }
