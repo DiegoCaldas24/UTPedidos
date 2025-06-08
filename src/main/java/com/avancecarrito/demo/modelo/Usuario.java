@@ -1,15 +1,9 @@
 package com.avancecarrito.demo.modelo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuarios")
@@ -32,7 +26,10 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RolUsuario rol;
-    
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Carrito> carrito;
+
     @Column(name = "fecha_ingreso", nullable = false)
     private LocalDateTime fechaIngreso;
     

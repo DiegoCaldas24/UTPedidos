@@ -1,16 +1,9 @@
 package com.avancecarrito.demo.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "productos")
@@ -24,7 +17,11 @@ public class Producto {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
-    
+
+    @OneToMany(mappedBy = "producto")
+    private List<Carrito> carritos;
+
+
     @Column(nullable = false, length = 30)
     private String nombre;
     
@@ -39,10 +36,10 @@ public class Producto {
     
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean estado;
-    
+
     @Column(name = "imagen_url")
     private String imagenUrl;
-    
+
     // Constructor vacío
     public Producto() {
     }

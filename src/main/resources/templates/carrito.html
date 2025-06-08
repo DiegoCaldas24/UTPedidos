@@ -63,15 +63,16 @@
                                     <th>Producto</th>
                                     <th>Cantidad</th>
                                     <th>Precio unitario</th>
-                                    <th>Hora del Pedido</th>
                                     <th>Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="item : ${carrito}">
-                                    <td th:text="${item}"></td>
-                                    <td th:text="${item}"></td>
-                                    
+                                    <td th:text="${item.producto.imagenUrl}"></td>
+                                    <td th:text="${item.producto.nombre}"></td>
+                                    <td th:text="${item.cantidad}"></td>
+                                    <td th:text="${item.producto.precio}"></td>
+                                    <td th:text="${item.total}"></td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -90,6 +91,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
