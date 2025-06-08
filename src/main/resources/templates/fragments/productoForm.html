@@ -24,6 +24,10 @@
             <option th:each="cat : ${categorias}" th:value="${cat.nombre}" th:text="${cat.nombre}" th:selected="${producto.categoria != null && producto.categoria.nombre == cat.nombre}"></option>
         </select>
     </div>
+        <div class="mb-3">
+        <label for="stock" class="form-label">Stock</label>
+        <input type="number" class="form-control" id="stock" name="stock" placeholder="Cantidad en stock" min="0" required th:value="${producto.stock}">
+    </div>
     <div class="mb-3">
         <label for="imagen" class="form-label">Imagen del Producto</label>
         <input class="form-control" type="file" id="imagen" name="imagen" accept="image/*">
@@ -40,6 +44,7 @@
             <label class="form-check-label" for="disponible">Disponible para ordenar</label>
         </div>
     </div>
+
     <button type="submit" class="btn btn-primary w-100">
         <span th:if="${producto.id == null}">Añadir Producto</span>
         <span th:if="${producto.id != null}">Actualizar Producto</span>

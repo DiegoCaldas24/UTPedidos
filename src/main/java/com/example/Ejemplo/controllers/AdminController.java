@@ -60,6 +60,7 @@ public class AdminController {
             @RequestParam("imagen") MultipartFile imagen,
             @RequestParam(value = "disponible", defaultValue = "false") boolean disponible,
             @RequestParam(value = "id", required = false) Integer id,
+            @RequestParam("stock") Integer stock,
             RedirectAttributes redirectAttributes) {
         Producto producto = new Producto();
         if (id != null) {
@@ -76,7 +77,7 @@ public class AdminController {
         }
         producto.setCategoria(categoria);
         producto.setEstado(disponible);
-        producto.setStock(100);
+        producto.setStock(stock);
         productoService.save(producto, imagen);
         redirectAttributes.addFlashAttribute("mensaje", "Producto guardado correctamente");
         return "redirect:/productos";
@@ -97,8 +98,12 @@ public class AdminController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminarProducto(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        productoService.delete(id);
-        redirectAttributes.addFlashAttribute("mensaje", "Producto eliminado correctamente");
+        Producto producto = productoService.findById(id);
+        if (producto != null) {
+            producto.setEstado(false);
+            productoService.save(producto, null); // O un método específico para actualizar solo el estado
+            redirectAttributes.addFlashAttribute("mensaje", "Producto marcado como no disponible");
+        }
         return "redirect:/productos";
     }
 }
