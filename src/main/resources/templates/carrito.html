@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Carrito de Compras - UTPedidos</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="container">
+            <h1 class="mb-4">Carrito de Compras</h1>
+            
+            <!-- Mensajes de alerta -->
+            <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${mensaje}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <!-- Contenido del carrito -->
+            <div th:if="${not #lists.isEmpty(itemsCarrito)}" class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${itemsCarrito}">
+                                    <td th:text="${item.producto.nombre}"></td>
+                                    <td>
+                                        <div class="input-group" style="width: 120px;">
+                                            <button class="btn btn-outline-secondary" type="button" 
+                                                    th:onclick="'actualizarCantidad(' + ${item.producto.id} + ', ' + (${item.cantidad} - 1) + ')'">-</button>
+                                            <input type="number" class="form-control text-center" 
+                                                   th:value="${item.cantidad}" readonly>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    th:onclick="'actualizarCantidad(' + ${item.producto.id} + ', ' + (${item.cantidad} + 1) + ')'">+</button>
+                                        </div>
+                                    </td>
+                                    <td th:text="${#numbers.formatCurrency(item.producto.precio)}"></td>
+                                    <td th:text="${#numbers.formatCurrency(item.total)}"></td>
+                                    <td>
+                                        <form th:action="@{/carrito/eliminar}" method="post" style="display: inline;">
+                                            <input type="hidden" name="idCarrito" th:value="${item.id}">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                    <td th:text="${#numbers.formatCurrency(total)}"></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-3">
+                        <a th:href="@{/inicio}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Seguir Comprando
+                        </a>
+                        <form th:action="@{/carrito/confirmar}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Realizar Pedido
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carrito vacío -->
+            <div th:if="${#lists.isEmpty(itemsCarrito)}" class="text-center py-5">
+                <i class="bi bi-cart-x display-1 text-muted"></i>
+                <h3 class="mt-3">Tu carrito está vacío</h3>
+                <p class="text-muted">Agrega algunos productos para comenzar tu pedido</p>
+                <a th:href="@{/inicio}" class="btn btn-primary mt-3">
+                    <i class="bi bi-arrow-left"></i> Ver Productos
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script th:inline="javascript">
+        function actualizarCantidad(productoId, nuevaCantidad) {
+            if (nuevaCantidad < 1) return;
+            window.location.href = `/carrito/actualizar/${productoId}?cantidad=${nuevaCantidad}`;
+        }
+
+        function eliminarProducto(productoId) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto del carrito?')) {
+                window.location.href = `/carrito/eliminar/${productoId}`;
+            }
+        }
+
+        function realizarPedido() {
+            if (confirm('¿Deseas confirmar tu pedido?')) {
+                window.location.href = '/carrito/confirmar';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -2,7 +2,6 @@ package com.example.Ejemplo.models;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,25 +13,24 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "carrito")
-public class Carrito {
+@Table(name = "detalle_carrito")
+public class DetalleCarrito {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carrito")
     private Integer id;
-
+    
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
-
+    @JoinColumn(name = "carrito_id")
+    private Carrito carrito;
+    
     @ManyToOne
-    @JoinColumn(name = "id_producto", nullable = false)
+    @JoinColumn(name = "producto_id")
     private Producto producto;
-
-    @Column(nullable = false)
+    
     private Integer cantidad;
-
-    @Column(nullable = false)
-    private BigDecimal total;
-}
+    
+    private BigDecimal precio;
+    
+    private BigDecimal subtotal;
+} 

@@ -10,6 +10,5 @@ import com.example.Ejemplo.models.Usuario;
 
 @Repository
 public interface CarritoRepository extends JpaRepository<Carrito, Integer> {
-    
-    List<Carrito> findByUsuario(Usuario usuario);
+    List<Carrito> findByUsuarioId(Integer usuarioId);
 }

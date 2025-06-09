@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>navbar</title>
+</head>
+<body>
+    <header th:fragment="navbar">
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid">
+                <!-- LOGO -->
+                <a class="navbar-brand d-flex align-items-center me-4" th:href="@{/inicio}">
+                    <span class="logo-coffee">Coffee</span>
+                    <span class="logo-utpedidos">UTPedidos</span>
+                </a>
+
+                <!-- Botón responsive -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Contenido navbar -->
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <!-- Enlaces a la izquierda -->
+                    <ul class="navbar-nav gap-4">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" th:href="@{/catalogo}">MENÚ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" th:href="@{/carrito}">CARRITO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-custom" href="#">PEDIDOS</a>
+                        </li>
+                    </ul>
+
+                    <!-- Botones a la derecha -->
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-dark btn-login" href="#">INICIAR SESIÓN</a>
+                        <a class="btn btn-dark btn-register"  href="#">REGÍSTRATE</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+</body>
+</html>

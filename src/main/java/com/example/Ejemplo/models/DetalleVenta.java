@@ -46,4 +46,5 @@ public class DetalleVenta {
     @Column(nullable = false, precision = 6, scale = 2)
     @jakarta.validation.constraints.NotNull
     private BigDecimal subtotal;
+    
 }
