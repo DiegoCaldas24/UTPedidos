@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title},~{::main},~{::script} )}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title},~{::main},~{::script},~{::link} )}">
 
 <head>
     <title>Catálogo</title>
+    <link rel="stylesheet" href="">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
                     Bebidas
                 </a>
 
-                <a class="btn btn-filtro rounded-pill" th:href="@{/catalogo(categoria='Snacks')}"
+                <a class="btn btn-filtro rounded-pill" th:href="@{/catalogo(categoria='Snack')}"
                     th:classappend="${param.categoria} == 'Snacks' ? ' btn-primary text-white' : ''">
                     <img th:src="@{/imagenes/snakcs.png}" alt="Snacks">
                     Snacks

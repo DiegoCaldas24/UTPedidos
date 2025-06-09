@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="https://thymeleaf.org" th:fragment="layout(title,content,scripts)" lang="es">
+<html xmlns="https://www.thymeleaf.org" th:fragment="layout(title,content,scripts,link)" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,8 +11,8 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Outfit:wght@100..900&display=swap"
         rel="stylesheet">
         <!-- Estilos personalizados -->
-    <link rel="stylesheet" th:href="@{/style.css}">
-    <link rel="stylesheet" th:href="@{/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
     <!-- JS del modal -->
     <script th:src="@{/js/modal.js}" defer></script>

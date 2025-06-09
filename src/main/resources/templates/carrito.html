@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title},~{::main},~{::script} )}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title},~{::main},~{::script},~{::link} )}">
 
 <head>
     <title>Carrito</title>
+    <link rel="stylesheet" th:href="@{/css/carrito.css}">
 </head>
 <body>
 
@@ -92,7 +93,6 @@
                     </div>
                 </div>
             </div>
-    </main>
-    <script></script>
+        </div>
 </body>
 </html>
