@@ -13,7 +13,7 @@ public class CarritoController {
      @Autowired
     private CarritoRepository carritoRepository;
 
-    @GetMapping("/carrito/1")
+    @GetMapping("/carrito/{idUsuario}")
     public String verCarrito(@PathVariable Integer idUsuario, Model model) {
         model.addAttribute("carrito", carritoRepository.findByUsuarioId(idUsuario));
         return "carrito";

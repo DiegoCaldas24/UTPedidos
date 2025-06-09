@@ -38,14 +38,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Carrito> carrito;
 
-    public List<Carrito> getCarrito() {
-        return carrito;
-    }
-
-    public void setCarrito(List<Carrito> carrito) {
-        this.carrito = carrito;
-    }
-
     @Column(name = "fecha_ingreso", nullable = false)
     private LocalDateTime fechaIngreso;
 

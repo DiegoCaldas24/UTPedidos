@@ -10,4 +10,6 @@ import com.principal.demo.model.Producto;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto,Integer>{
     List<Producto> findAllByCategoriaNombre(String nombre);
+
+    List<Producto> findAllById(Integer id);
 }

@@ -13,22 +13,20 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name = "carrito")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrito")
     private Integer id;
 
-    // Variable local para usuario (en vez de relación con Usuario)
-    @Column(name = "id_usuario", nullable = false)
-    private Integer usuarioId;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_producto")
@@ -40,12 +38,12 @@ public class Carrito {
     @Column(nullable = false, precision = 6, scale = 3)
     private BigDecimal total;
 
-    public Integer getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Integer usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Producto getProducto() {

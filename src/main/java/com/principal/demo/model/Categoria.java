@@ -11,43 +11,42 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "categorias")
-
 public class Categoria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private Integer idCategoria;
+    private Integer id;
 
-    @Column(name = "nombre", length = 30, nullable = false)
+    @Column(nullable = false, length = 30)
     private String nombre;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Producto> productos;
-
-    public Integer getIdCategoria() {
-        return this.idCategoria;
+    // Constructor vacío
+    public Categoria() {
     }
 
-    public void setIdCategoria(Integer idCategoria) {
-        this.idCategoria = idCategoria;
+    // Constructor completo
+    public Categoria(Integer id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    // Getters y setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public List<Producto> getProductos() {
-        return this.productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
     }
 }

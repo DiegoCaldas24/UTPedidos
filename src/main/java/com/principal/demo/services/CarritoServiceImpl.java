@@ -15,8 +15,6 @@ import com.principal.demo.repository.ProductoRepository;
 @Service
 public class CarritoServiceImpl implements CarritoService {
 
-    private static final int ID_USUARIO_FIJO = 1; // Usuario simulado
-
     @Autowired
     private ProductoRepository productoRepository;
 
@@ -30,12 +28,11 @@ public class CarritoServiceImpl implements CarritoService {
 
     @Override
     public List<Producto> findAllProductosById(int id) {
-        return productoRepository.findByCategoriaId(id);
+        return productoRepository.findAllById(id);
     }
 
     @Override
-    public List<Carrito> obtenerCarritoPorUsuario() {
-        // Usar el id fijo directamente, ya que así está adaptado el repositorio y modelo
-        return carritoRepository.findByUsuarioId(ID_USUARIO_FIJO);
+    public List<Carrito> obtenerCarritoPorUsuario(int id) {
+        return carritoRepository.findByUsuarioId(id);
     }
 }

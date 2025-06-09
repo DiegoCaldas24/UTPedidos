@@ -1,15 +1,9 @@
 package com.principal.demo.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -18,55 +12,44 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "productos")
 public class Producto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_categoria")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria categoria;
 
+    @OneToMany(mappedBy = "producto")
+    private List<Carrito> carritos;
+
+
     @Column(nullable = false, length = 30)
-    @NotBlank
-    @Size(max = 30)
     private String nombre;
 
     @Column(nullable = false, precision = 6, scale = 2)
-    @NotNull
-    @DecimalMin("0.00")
     private BigDecimal precio;
 
     @Column(nullable = false, length = 255)
-    @NotBlank
-    @Size(max = 255)
     private String descripcion;
 
     @Column(nullable = false)
-    @NotNull
-    @Min(0)
     private Integer stock;
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    @NotNull
     private Boolean estado;
 
     @Column(name = "imagen_url")
-    @Size(max = 255)
     private String imagenUrl;
 
-    public Producto(){}
-    public Producto(Categoria categoria, String nombre, BigDecimal precio, String descripcion, Integer stock, Boolean estado, String imagenUrl) {
-        this.categoria = categoria;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.stock = stock;
-        this.estado = estado;
-        this.imagenUrl = imagenUrl;
+    // Constructor vacío
+    public Producto() {
     }
 
-  public Producto(Integer id, Categoria categoria, String nombre, BigDecimal precio, String descripcion, Integer stock, Boolean estado, String imagenUrl) {
+    // Constructor completo
+    public Producto(Integer id, Categoria categoria, String nombre, BigDecimal precio, String descripcion, Integer stock, Boolean estado, String imagenUrl) {
         this.id = id;
         this.categoria = categoria;
         this.nombre = nombre;
@@ -77,6 +60,7 @@ public class Producto {
         this.imagenUrl = imagenUrl;
     }
 
+    // Getters y setters
     public Integer getId() {
         return id;
     }
@@ -141,4 +125,3 @@ public class Producto {
         this.imagenUrl = imagenUrl;
     }
 }
-
