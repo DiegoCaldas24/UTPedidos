@@ -2,34 +2,17 @@ package com.example.Ejemplo.models;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Embeddable
 public class DetallePedidoId implements Serializable {
-    private static final long serialVersionUID = 1L;
     
-    private Integer pedido;
-    private Integer producto;
-
-    public Integer getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Integer pedido) {
-        this.pedido = pedido;
-    }
-
-    public Integer getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Integer producto) {
-        this.producto = producto;
-    }
-
-
+    @Column(name = "id_pedido")
+    private Integer idPedido;
+    
+    @Column(name = "id_producto")
+    private Integer idProducto;
 }
