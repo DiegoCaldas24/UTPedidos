@@ -1,17 +1,12 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Selecciona todos los botones de "Agregar" por su clase (puedes cambiarla si usas otra)
-    const agregarBtns = document.querySelectorAll('.btn1');
-    const pagarBtn = document.querySelector('.btn2');
-
-    agregarBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
-            alert('¡Producto agregado! (Bueno... todavía no, esta función está en construcción)');
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("formPago");
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const telefono = form.telefono.value;
+        const codigo = form.codigo.value;
+        if (telefono === "" || codigo === "") {
+            alert("Por favor completa los campos obligatorios.");
+            return;
+        } manualmente: form.submit();
     });
-
-    if (pagarBtn) {
-        pagarBtn.addEventListener('click', function () {
-            alert('La función de pago estará disponible pronto.');
-        });
-    }
 });

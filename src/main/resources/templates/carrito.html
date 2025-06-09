@@ -26,6 +26,7 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="item : ${carrito}">
+                                        <td></td>
                                         <td th:text="${item.producto.nombre}"></td>
                                         <td th:text="${item.cantidad}"></td>
                                         <td th:text="${item.producto.precio}"></td>
@@ -34,17 +35,63 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="4"></td> 
+                                        <td colspan="3"></td>
                                         <td><strong>Total:</strong></td>
-                                        <td><strong></strong></td>
+                                        <td><strong th:text="${total}"></strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
                             <div class="botones d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                                <a class="btn1 btn w-100 w-md-auto">Añadir producto</a>
-                                <button type="button" class="btn btn-success" id="btnPagar">Pagar</button>
+                                <a class="btn1 btn w-100 w-md-auto" href="/catalogo">Añadir producto</a>
+                                <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
+                                    data-bs-target="#modalPago"> Pagar </button>
+
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="tituloModalPago" aria-hidden="true"
+                data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content shadow-lg border-0 rounded-4">
+                        <div class="modal-header bg-primary text-white rounded-top-4">
+                            <h5 class="modal-title" id="tituloModalPago">Confirmar Pago</h5>
+                        </div>
+                        <form th:action="@{'/carrito/' + ${idUsuario}}" method="post" id="formPago">
+                            <div class="modal-body">
+                                <div th:if="${error}" class="alert alert-danger text-center"> <span
+                                        th:text="${error}"></span> </div>
+                                <div class="mb-3">
+                                    <label for="metodo" class="form-label">Método de Pago</label>
+                                    <select class="form-select" name="metodo" id="metodo" required>
+                                        <option value="">Selecciona...</option>
+                                        <option value="Yape">Yape</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="telefono" class="form-label">Número de Teléfono</label>
+                                    <input type="tel" class="form-control" name="telefono" id="telefono"
+                                        pattern="[0-9]{9}" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="codigo" class="form-label">Código de Verificación</label>
+                                    <input type="text" class="form-control" name="codigo" id="codigo" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="horaRecojo" class="form-label">Hora de recojo</label>
+                                    <input type="time" class="form-control" name="horaRecojo" id="horaRecojo"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Confirmar pago</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

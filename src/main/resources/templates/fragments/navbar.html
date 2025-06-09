@@ -26,10 +26,10 @@
                             <a class="nav-link nav-link-custom" th:href="@{/catalogo}">MENÚ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">CARRITO</a>
+                            <a class="nav-link nav-link-custom" th:href="@{/carrito/{idUsuario}(idUsuario=${idUsuario})}">CARRITO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" href="#">PEDIDOS</a>
+                            <a class="nav-link nav-link-custom" th:href="@{/tupedido/{idUsuario}(idUsuario=${idUsuario})}">TUPEDIDO</a>
                         </li>
                     </ul>
 
