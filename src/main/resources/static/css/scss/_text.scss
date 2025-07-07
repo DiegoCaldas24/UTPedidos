@@ -1,0 +1,36 @@
+h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 600;
+    color: $negro;
+    text-align: center;
+}
+
+.link {
+    margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: $negro;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-text {
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+    font-size: 18px;
+    margin-top: 40%;
+}

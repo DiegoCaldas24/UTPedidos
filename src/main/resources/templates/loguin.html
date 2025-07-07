@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/login.css}">
+  <title>Login</title>
+</head>
+
+<body>
+  <section class="active">
+    <img src="/imagenes/imagens.jpg" alt="Cafe" class="top-image" />
+    <div class="beige-curve">
+      <div class="form-box">
+        <h1>Iniciar sesión</h1>
+        <form th:action="@{/loguin}" method="post">
+          <label for="username">Correo institucional</label>
+          <input type="email" name="username" id="username" placeholder="Ej: u1234567@utp.edu.pe"
+            pattern="^[aeiouAEIOU][0-9]+@utp\.edu\.pe$"
+            title="Debe comenzar con una vocal seguida de números y terminar en @utp.edu.pe" required>
+
+          <label for="password">Contraseña</label>
+          <input type="password" name="password" id="password" placeholder="Contraseña" required>
+
+          <div th:if="${error}" class="error-message" th:text="${error}"></div>
+
+          <button type="submit">Iniciar sesión</button>
+        </form>
+        <div class="link">
+          <a th:href="@{/register}">¿No tienes cuenta? Regístrate aquí</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

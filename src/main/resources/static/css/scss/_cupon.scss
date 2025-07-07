@@ -1,0 +1,71 @@
+#carruselCupones {
+    .carousel-item {
+        padding: 1rem 0;
+
+        .row {
+            align-items: stretch; // <- clave para que todas las col-md-3 tengan igual altura
+        }
+
+        .card {
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+
+            &:hover {
+                transform: translateY(-4px);
+            }
+
+            .card-img-top {
+                height: 160px !important;
+                object-fit: cover !important;
+                width: 100% !important;
+            }
+
+            .card-body {
+                flex: 1 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+
+                .card-title {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
+
+                .card-text {
+                    font-size: 0.85rem;
+                    margin-bottom: 0.8rem;
+                    flex-grow: 1;
+                }
+
+                .btn {
+                    font-size: 0.8rem;
+                    padding: 5px 16px;
+                    align-self: flex-start;
+                }
+            }
+        }
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .col-md-3 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .col-md-3 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+}

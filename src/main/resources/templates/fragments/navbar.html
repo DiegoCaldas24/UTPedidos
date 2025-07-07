@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>navbar</title>
 </head>
+
 <body>
     <header th:fragment="navbar">
         <nav class="navbar navbar-expand-lg custom-navbar">
@@ -12,7 +14,6 @@
                     <span class="logo-coffee">Coffee</span>
                     <span class="logo-utpedidos">UTPedidos</span>
                 </a>
-
                 <!-- Botón responsive -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -26,21 +27,31 @@
                             <a class="nav-link nav-link-custom" th:href="@{/catalogo}">MENÚ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" th:href="@{/carrito/{idUsuario}(idUsuario=${idUsuario})}">CARRITO</a>
+                            <a class="nav-link nav-link-custom" th:href="@{/carrito/1}">CARRITO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-custom" th:href="@{/tupedido/{idUsuario}(idUsuario=${idUsuario})}">TUPEDIDO</a>
+                            <a class="nav-link nav-link-custom" th:href="@{/pedido/1}">PEDIDOS</a>
                         </li>
                     </ul>
-
-                    <!-- Botones a la derecha -->
-                    <div class="d-flex gap-2">
-                        <a class="btn btn-outline-dark btn-login" href="#">INICIAR SESIÓN</a>
-                        <a class="btn btn-dark btn-register"  href="#">REGÍSTRATE</a>
+                    <!-- Ícono de usuario a la derecha -->
+                    <div class="dropdown ms-auto">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                            id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-fill"></i> <!-- Ícono -->
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="/perfil">Editar cuenta</a></li>
+                            <li><a class="dropdown-item" href="/pedido/1">Mis pedidos</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="/">Cerrar sesión</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 </body>
+
 </html>

@@ -1,6 +1,5 @@
-package com.avancecarrito.demo.modelo;
+package com.principal.demo.model;
 
-import java.math.BigDecimal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name = "carrito")
 @Data
@@ -35,8 +33,8 @@ public class Carrito {
     @Column(nullable = false)
     private Integer cantidad;
 
-    @Column(nullable = false, precision = 6, scale = 3)
-    private BigDecimal total;
+    @Column(nullable = false)
+    private Double total;
 
     public Usuario getUsuario() {
         return usuario;
@@ -62,11 +60,11 @@ public class Carrito {
         this.cantidad = cantidad;
     }
 
-    public BigDecimal getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

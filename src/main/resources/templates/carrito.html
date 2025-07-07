@@ -2,19 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title},~{::main},~{::script} )}">
 
 <head>
-
     <title>Carrito</title>
-
+    <link rel="stylesheet" th:href="@{/css/carrito.css}">
 </head>
 
 <body>
-    <main>
-        <div class="container">
+
+    <main class="">
+        <div class="container ">
             <div class="row">
-                <div class="col-md-12">
+                <div class="mt-6 col-md-12">
                     <div class="tabla-contenedor">
                         <div class="table-responsive">
-                            <table class="align-middle text-center w-100">
+                            <div th:if="${#lists.isEmpty(carrito)}">
+                                <h2>No hay productos en el carrito.</h2>
+                            </div>
+                            <table th:if="${not #lists.isEmpty(carrito)}" class="align-middle text-center w-100">
                                 <thead>
                                     <tr>
                                         <th>Imagen</th>
@@ -22,83 +25,91 @@
                                         <th>Cantidad</th>
                                         <th>Precio unitario</th>
                                         <th>Subtotal</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     <tr th:each="item : ${carrito}">
-                                        <td></td>
+                                        <td><img th:src="@{${item.producto.imagenUrl}}" style="width: 60px;" alt="">
+                                        </td>
                                         <td th:text="${item.producto.nombre}"></td>
                                         <td th:text="${item.cantidad}"></td>
                                         <td th:text="${item.producto.precio}"></td>
-                                        <td th:text="${item.total}"></td>
+                                        <td class="subtotal" th:text="${item.total}"></td>
+                                        <td>
+                                            <form
+                                                th:action="@{/carrito/eliminar/{usuarioId}/{productoId}(
+                                                                                            usuarioId=${item.usuario.id},
+                                                                                            productoId=${item.producto.id})}"
+                                                method="POST">
+                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 </tbody>
+
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3"></td>
-                                        <td><strong>Total:</strong></td>
-                                        <td><strong th:text="${total}"></strong></td>
+                                        <td colspan="5"><strong>Total:</strong></td>
+                                        <td><strong id="totalCarrito">S/ 0.00</strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
                             <div class="botones d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                                <a class="btn1 btn w-100 w-md-auto" href="/catalogo">Añadir producto</a>
-                                <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal"
-                                    data-bs-target="#modalPago"> Pagar </button>
+                                <a class="btn1 btn w-100 w-md-auto" th:href="@{/catalogo}">Añadir producto</a>
+                                <button type="button" class="btn btn-success btn-lg"
+                                    onclick="abrirModal()">Pagar</button>
 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="tituloModalPago" aria-hidden="true"
-                data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content shadow-lg border-0 rounded-4">
-                        <div class="modal-header bg-primary text-white rounded-top-4">
-                            <h5 class="modal-title" id="tituloModalPago">Confirmar Pago</h5>
+            <div id="modalDetalle" class="modal-custom">
+                <div class="modal-content-custom">
+                    <span class="close" onclick="cerrarModal()">&times;</span>
+                    <h5>Confirmar Pago</h5>
+                    <form th:action="@{/pedir}" method="post" id="formPago"> <!--onsubmit="return false;"-->
+                        <input type="hidden" id="idUsuario" name="idUsuario" th:value="1" />
+                        <div th:if="${error}" class="alert alert-danger text-center">
+                            <span th:text="${error}"></span>
                         </div>
-                        <form th:action="@{'/carrito/' + ${idUsuario}}" method="post" id="formPago">
-                            <div class="modal-body">
-                                <div th:if="${error}" class="alert alert-danger text-center"> <span
-                                        th:text="${error}"></span> </div>
-                                <div class="mb-3">
-                                    <label for="metodo" class="form-label">Método de Pago</label>
-                                    <select class="form-select" name="metodo" id="metodo" required>
-                                        <option value="">Selecciona...</option>
-                                        <option value="Yape">Yape</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="telefono" class="form-label">Número de Teléfono</label>
-                                    <input type="tel" class="form-control" name="telefono" id="telefono"
-                                        pattern="[0-9]{9}" required />
-                                </div>
 
-                                <div class="mb-3">
-                                    <label for="codigo" class="form-label">Código de Verificación</label>
-                                    <input type="text" class="form-control" name="codigo" id="codigo" required />
-                                </div>
+                        <div class="mb-3">
+                            <label for="metodo" class="form-label">Método de Pago</label>
+                            <select class="form-select" name="metodo" id="metodo" required>
+                                <option value="Yape">Yape</option>
+                            </select>
+                        </div>
 
-                                <div class="mb-3">
-                                    <label for="horaRecojo" class="form-label">Hora de recojo</label>
-                                    <input type="time" class="form-control" name="horaRecojo" id="horaRecojo"
-                                        required />
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Confirmar pago</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Número de Teléfono</label>
+                            <input type="tel" class="form-control" name="telefono" id="telefono" pattern="[0-9]{9}"
+                                required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="codigo" class="form-label">Código de Verificación</label>
+                            <input type="text" class="form-control" name="codigo" id="codigo" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="horaRecojo" class="form-label">Hora de recojo</label>
+                            <input type="time" class="form-control" name="horaEntrega" id="horaRecojo" required />
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                            <button type="submit" class="btn btn-success" onclick="confirmarPago()">Confirmar
+                                pago</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-
     </main>
-    <script></script>
 
+    <script></script>
 </body>
 
 </html>

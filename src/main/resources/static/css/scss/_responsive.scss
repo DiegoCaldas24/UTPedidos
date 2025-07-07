@@ -1,0 +1,41 @@
+@media (max-width: 600px) {
+    section.active {
+        padding-top: 22vh;
+    }
+
+    .top-image {
+        height: 32vh;
+    }
+
+    .beige-curve {
+        top: 22vh;
+        height: 78vh;
+        padding: 15px;
+        border-top-left-radius: 60px;
+        border-top-right-radius: 60px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 10px;
+        margin: 6px 0 12px 0;
+    }
+
+    button {
+        padding: 12px 15px;
+        font-size: 15px;
+        margin-top: 18px;
+    }
+
+    .link {
+        font-size: 14px;
+    }
+}

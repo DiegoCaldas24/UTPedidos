@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main}, ~{::script})}">
+
+<head>
+    <title>Mis Pedidos</title>
+</head>
+
+<body>
+<main>
+    <div class="container-md mt-4">
+        <h1 class="mb-4 text-center">Mis Pedidos</h1>
+
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4" th:each="pedido : ${pedidos}">
+                <div class="card shadow rounded-4 p-4 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">
+                            Código de pedido:
+                            <span class="text-uppercase">PED-XXXXX</span>
+                        </h5>
+
+                        <p class="mb-1">
+                            <strong>Fecha:</strong>
+                            <span th:text="${#temporals.format(pedido.fechaEntrega, 'dd/MM/yyyy HH:mm')}"></span>
+                        </p>
+
+                        <p class="mb-3">
+                            <strong>Estado:</strong>
+                            <span th:classappend="${pedido.estado} ? 'text-success' : 'text-danger'"
+                                  th:text="${pedido.estado} ? 'Pagado' : 'Pendiente'"></span>
+                        </p>
+
+                        <div class="d-grid">
+                            <button class="btn btn-primary" style="background-color: #5b4ef1; border-color: #5b4ef1;">
+                                Ver productos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+    <!-- Modal de Detalles del Pedido -->
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content p-4 rounded shadow bg-white"
+             style="width: 80%; margin: 10% auto; position: relative;">
+                <span class="close" onclick="cerrarModalPedido()"
+                      style="position: absolute; top: 10px; right: 20px; font-size: 1.5rem; cursor: pointer;">&times;</span>
+
+            <h4 class="mb-3">Detalles del Pedido</h4>
+            <p><strong>Hora de entrega:</strong> <span id="horaEntrega"></span></p>
+            <ul id="lista-productos" class="list-group"></ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script></script>
+</body>
+
+</html>
