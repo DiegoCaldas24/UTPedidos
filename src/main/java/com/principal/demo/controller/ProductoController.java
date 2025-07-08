@@ -56,7 +56,6 @@ public class ProductoController {
         model.addAttribute("busquedaActual", busqueda);
         model.addAttribute("noResultados", productosPage.getContent().isEmpty());
 
-
         return "catalogo";
     }
 
@@ -77,9 +76,7 @@ public class ProductoController {
         }
 
         double total = cantidad * producto.getPrecio();
-
         List<Carrito> carrito = carritoServiceImpl.obtenerCarritosPorUsuario(idUsuario);
-
         for (Carrito carro : carrito) {
             if (carro.getProducto().getId() == idProducto) {
                 nuevaCantidad = carro.getCantidad() + cantidad;
@@ -96,10 +93,6 @@ public class ProductoController {
         redirectAttributes.addFlashAttribute("message", "Se añadió al carrito correctamente");
         return "redirect:/catalogo";
     }
-    /*
-     * @GetMapping("/provocar-error")
-     * public String provocarError() {
-     * throw new RuntimeException("Error intencional para probar el 500");
-     * }
-     */
+
+
 }
