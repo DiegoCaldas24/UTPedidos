@@ -14,32 +14,49 @@
             <span th:text="${message}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-
-        <!-- Filtros de categoría -->
+        
+        <!-- Sección de filtros de categoría -->
         <section class="text-center my-4">
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a class="btn-filtro rounded-pill" th:href="@{/catalogo(categoria='MENU ECONOMICO')}"
-                    th:classappend="${param.categoria} == 'MENU ECONOMICO' ? ' activo' : ''">
-                    <!-- <img th:src="@{/imagenes/menu.png}" alt="Menú"> -->
+                <!-- Botón principal para mostrar/ocultar subcategorías -->
+                <a href="#" id="btn-menu-dia" class="btn-filtro rounded-pill">
                     MENÚ DEL DÍA
                 </a>
-                <a class="btn-filtro rounded-pill" th:href="@{/catalogo(categoria='Bebidas')}"
+
+                <!-- Otras categorías -->
+                <a class="btn-filtro rounded-pill filtro-general" th:href="@{/catalogo(categoria='Bebidas')}"
                     th:classappend="${param.categoria} == 'Bebidas' ? ' activo' : ''">
-                    <!--<img th:src="@{/imagenes/bebidas.png}" alt="Bebidas">-->
                     BEBIDAS
                 </a>
-                <a class="btn-filtro rounded-pill" th:href="@{/catalogo(categoria='Snacks')}"
+                <a class="btn-filtro rounded-pill filtro-general" th:href="@{/catalogo(categoria='Snacks')}"
                     th:classappend="${param.categoria} == 'Snacks' ? ' activo' : ''">
-                    <!--<img th:src="@{/imagenes/snakcs.png}" alt="Snacks">-->
                     SNACKS
                 </a>
-                <a class="btn-filtro rounded-pill" th:href="@{/catalogo(categoria='Postres')}"
+                <a class="btn-filtro rounded-pill filtro-general" th:href="@{/catalogo(categoria='Postres')}"
                     th:classappend="${param.categoria} == 'Postres' ? ' activo' : ''">
-                    <!--<img th:src="@{/imagenes/postres.png}" alt="Postres">-->
                     POSTRES
                 </a>
             </div>
+
+            <!-- Subcategorías del menú del día -->
+            <div id="botones-menu-dia" class="d-none d-flex justify-content-center gap-3 mt-3 flex-wrap">
+                <a class="btn-filtro btn-menu-extra rounded-pill" th:href="@{/catalogo(categoria='MENU ECONOMICO')}"
+                    th:classappend="${param.categoria} == 'MENU ECONOMICO' ? ' activo' : ''">
+                    Económico
+                </a>
+                <a class="btn-filtro btn-menu-extra rounded-pill" th:href="@{/catalogo(categoria='MENU EJECUTIVO')}"
+                    th:classappend="${param.categoria} == 'MENU EJECUTIVO' ? ' activo' : ''">
+                    Ejecutivo
+                </a>
+                <a class="btn-filtro btn-menu-extra rounded-pill" th:href="@{/catalogo(categoria='MENU UNIVERSITARIO')}"
+                    th:classappend="${param.categoria} == 'MENU UNIVERSITARIO' ? ' activo' : ''">
+                    Universitario
+                </a>
+            </div>
+
         </section>
+
+
 
         <!-- Barra de búsqueda -->
         <section class="container mb-4">
