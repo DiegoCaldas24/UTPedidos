@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <h5 class="card-title fw-bold">
                             Código de pedido:
-                            <span class="text-uppercase">PED-XXXXX</span>
+                            <span class="text-uppercase" th:text="'PED-' + ${pedido.codigo}">PED-XXXXX</span>
                         </h5>
 
                         <p class="mb-1">
@@ -33,7 +33,7 @@
 
                         <div class="d-grid">
                             <button class="btn btn-primary" style="background-color: #5b4ef1; border-color: #5b4ef1;">
-                                Ver productos
+                                Ver detalles
                             </button>
                         </div>
                     </div>

@@ -30,6 +30,9 @@ public class Pedido {
     @Column(name = "estado")
     private boolean estado;
 
+    @Column(name = "codigo_aleatorio")
+    private String codigo;
+
     @PrePersist
     protected void onCreate() {
         fechaPedido = LocalDateTime.now();

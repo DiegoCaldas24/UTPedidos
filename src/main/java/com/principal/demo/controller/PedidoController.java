@@ -4,6 +4,7 @@ import com.principal.demo.model.Pedido;
 import com.principal.demo.model.Usuario;
 import com.principal.demo.services.CarritoService;
 import com.principal.demo.services.CarritoServiceImpl;
+import com.principal.demo.services.PedidoService;
 import com.principal.demo.services.PedidoServiceImpl;
 import com.principal.demo.services.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 public class PedidoController {
@@ -26,27 +28,31 @@ public class PedidoController {
     @Autowired
     private CarritoServiceImpl carritoServiceImpl;
 
+
     @PostMapping("/pedido/registrar")
     public String registrarPedido(@RequestParam String nombreProducto, @RequestParam int cantidad) {
         System.out.println("Pedido recibido: " + nombreProducto + " - Cantidad: " + cantidad);
-        // Aquí podrías almacenar el pedido en una lista temporal o simplemente mostrar un mensaje
+        // Aquí podrías almacenar el pedido en una lista temporal o simplemente mostrar
+        // un mensaje
         return "redirect:/catalogo";
     }
-    
+
     @GetMapping("/pedido/{idUsuario}")
     public String verPagos(@PathVariable Integer idUsuario, Model model) {
         model.addAttribute("pedidos", pedidoServiceImpl.findByUsuario_Id(idUsuario));
-        return "pedido"; 
+        return "pedido";
     }
 
     @PostMapping("/pedir")
-    public String pedir(@RequestParam("idUsuario") int idUsuario, @RequestParam("horaEntrega")LocalTime horaEntrega, Model model) {
+    public String pedir(@RequestParam("idUsuario") int idUsuario, @RequestParam("horaEntrega") LocalTime horaEntrega,
+            Model model) {
         Pedido pedido = new Pedido();
+        pedido.setCodigo(pedidoServiceImpl.generarCodigoUnico());
         pedido.setUsuario(usuarioServiceImpl.findUsuarioById(idUsuario).orElse(null));
         pedido.setFechaEntrega(horaEntrega);
-        carritoServiceImpl.limpiarCarrito(idUsuario);
         pedidoServiceImpl.guardarPedido(pedido);
-        return "pedido";
+        carritoServiceImpl.limpiarCarrito(idUsuario);
+        return "redirect:/pedido/1";
     }
 
 }
